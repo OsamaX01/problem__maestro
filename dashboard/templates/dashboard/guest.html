@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Guest</title>    
+    </head>
+    <body>
+        <h1>Welcome to our website!</h1>
+
+        {% if not user.is_authenticated %}
+        <a>Register</a>
+        {% endif %}
+        
+        <!-- Display login button if user is not logged in -->
+        {% if not user.is_authenticated %}
+        <a>Login</a>
+        {% endif %}
+
+        <!-- Display logout button if user is logged in -->
+        {% if user.is_authenticated %}
+        <a>Logout</a>
+        {% endif %}
+    </body>
+</html>
