@@ -2,6 +2,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm 
 
+from .models import CustomUser
+
+# Forms goes here
+
+class SignUpForm(UserCreationForm):
+   class Meta:
+      model = CustomUser 
+      fields = ('username', 'password1', 'password2') 
+
+
+# Helper functions goes here
 def login_if_valid(request, username, password):
     user = authenticate(request, username = username, password = password)
     if user is not None:
@@ -11,7 +22,7 @@ def login_if_valid(request, username, password):
 # Create your views here.
 def register_view(request):
     if (request.method == 'POST'):
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = request.POST['username']
