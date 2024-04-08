@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm 
+from django.shortcuts import render, redirect
 from django import forms
 
 
@@ -59,7 +60,7 @@ def login_view(request):
             return redirect('dashboard:index')
         else:  
             return render(request, "users/login.html", {
-                "message" : "Invalid Credentials!",
+                "messages" : ["Invalid Credentials!"],
             })
 
     return render(request, "users/login.html")
@@ -69,9 +70,8 @@ def logout_view(request):
         return redirect('dashboard:index')
 
     logout(request)
-    return render(request, "users/login.html", {
-        "message" : "Logged out!",
-    })
+    messages.success(request, "Logged out!")
+    return redirect('dashboard:index')
 
 def profile_view(request):
     if not request.user.is_authenticated:
