@@ -1,0 +1,16 @@
+{% extends 'users/layout.html' %}
+{% load poll_extras %}
+
+{% block body %}
+    <h1> {{ user.username }} Profile </h1>
+    
+    <h2> User info: </h2>
+    <ul>
+        {% for field in form %}
+            {% if user|get_attribute:field.name %}
+                <li> {{ field.label_tag }} {{ user|get_attribute:field.name }} </li>
+            {% endif %}   
+        {% endfor %}
+    </ul>
+{% endblock body %}
+    
