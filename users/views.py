@@ -1,15 +1,20 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm 
+from django import forms
+
 
 from .models import CustomUser
 
 # Forms goes here
 
-class SignUpForm(UserCreationForm):
-   class Meta:
-      model = CustomUser 
-      fields = ('username', 'password1', 'password2') 
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(label='First Name', max_length=20)
+    last_name = forms.CharField(label='Last Name', max_length=20)
+    
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2') 
 
 
 # Helper functions goes here
@@ -21,8 +26,8 @@ def login_if_valid(request, username, password):
 
 # Create your views here.
 def register_view(request):
-    if (request.method == 'POST'):
-        form = SignUpForm(request.POST)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = request.POST['username']
@@ -34,7 +39,7 @@ def register_view(request):
                 'form' : form
             })
     
-    form = UserCreationForm()
+    form = RegisterForm()
     return render(request, 'users/register.html', {
         'form' : form
     })

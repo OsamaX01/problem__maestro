@@ -10,24 +10,15 @@
         <h2>User Registration</h2>
         <form action="{% url 'users:register' %}" method="POST">
             {% csrf_token %}
-            <div>
-                {{ form.username.label_tag }}
-                {{ form.username }}
-            </div>
-            <br>
 
-            <div>
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
-            </div>
-            <br>
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field.label_tag }} {{ field }}
+                </div>
+            {% endfor %}
 
-            <div>
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit">Register</button>
         </form>
     </div>
 {% endblock body %}
