@@ -26,6 +26,9 @@ def login_if_valid(request, username, password):
 
 # Create your views here.
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard:index')
+
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -45,6 +48,9 @@ def register_view(request):
     })
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard:index')
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -59,12 +65,18 @@ def login_view(request):
     return render(request, "users/login.html")
 
 def logout_view(request):
+    if not request.user.is_authenticated:
+        return redirect('dashboard:index')
+
     logout(request)
     return render(request, "users/login.html", {
         "message" : "Logged out!",
     })
 
 def profile_view(request):
+    if not request.user.is_authenticated:
+        return redirect('dashboard:index')
+    
     return render(request, "users/profile.html", {
         "form" : RegisterForm()
     })
