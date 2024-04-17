@@ -1,22 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm 
 from django.shortcuts import render, redirect
-from django import forms
 
-
-from .models import CustomUser
-
-# Forms goes here
-
-class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(label='First Name', max_length=20)
-    last_name = forms.CharField(label='Last Name', max_length=20)
-    
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2') 
-
+from .forms import RegisterForm, EditProfileForm
 
 # Helper functions goes here
 def login_if_valid(request, username, password):
@@ -79,4 +65,20 @@ def profile_view(request):
     
     return render(request, "users/profile.html", {
         "form" : RegisterForm()
+    })
+
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = EditProfileForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('users:profile')
+        else:
+            return render(request, 'users/edit_profile.html', {
+                'form': user_form
+            })        
+        
+    user_form = EditProfileForm(instance=request.user)
+    return render(request, 'users/edit_profile.html', {
+        'form': user_form
     })

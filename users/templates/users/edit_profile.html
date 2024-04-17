@@ -1,0 +1,15 @@
+{% extends 'users/layout.html' %}
+
+{% block body %}
+  <h2>Edit Profile</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    <button type="submit">Save Changes</button>
+  </form>
+{% endblock %}
