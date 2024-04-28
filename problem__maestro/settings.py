@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'dashboard',
     'users',
     'course',
+    'problem',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
