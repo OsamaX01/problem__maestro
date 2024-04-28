@@ -59,9 +59,12 @@
 
     <div class="content">
     {% for course in courses %}
-        <div class="card">
-            <h2> {{course.name}} </h2>
-        </div>
+        <a href="{% url 'course:index' course.id %}">
+            <div class="card">
+                <h2>{{ course.name }}</h2>
+            </div>
+        </a>
+
     {% empty %}
         <div class="content"> 
             <h2> You are not enrolled to any courses yet </h2>
