@@ -9,7 +9,7 @@ def index(request):
         return render(request, "dashboard/guest.html")
     
     student_courses = Course.objects.filter(students=request.user)
-    instructor_courses = Course.objects.filter(instructor_id=request.user)
+    instructor_courses = Course.objects.filter(instructor=request.user)
     return render(request, "dashboard/user_dashboard.html", {
         "courses" : (student_courses | instructor_courses).distinct()
     })
