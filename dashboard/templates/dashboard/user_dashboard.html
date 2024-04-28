@@ -58,17 +58,15 @@
     </div>
 
     <div class="content">
+    {% for course in courses %}
         <div class="card">
-            <h2>Course 1</h2>
+            <h2> {{course.name}} </h2>
         </div>
-        <div class="card">
-            <h2>Course 2</h2>
+    {% empty %}
+        <div class="content"> 
+            <h2> You are not enrolled to any courses yet </h2>
         </div>
-    </div>
-
-    <div class="footer">
-        <p>Create Problem</p>
-        <p>Create Course</p>
+    {% endfor %}
     </div>
 
 </body>
