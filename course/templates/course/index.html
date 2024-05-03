@@ -9,7 +9,7 @@
         </h1>
         {% for problem in course.problems.all %}
             <li>
-                <a href="#"> {{ problem.name }} </a>        
+                <a href="{% url 'problem:index' problem.id %}"> {{ problem.name }} </a>        
             </li>
         {% endfor %}
     </body>
