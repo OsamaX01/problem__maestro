@@ -11,4 +11,4 @@ class ProblemForm(forms.ModelForm):
 class TestCaseForm(forms.ModelForm):
     class Meta:
         model = TestCase
-        fields = ['number', 'data', 'is_visable']
+        fields = ['data', 'is_visable']

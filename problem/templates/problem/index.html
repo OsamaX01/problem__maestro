@@ -5,20 +5,19 @@
 </head>
 <body>
     <h1>{{ problem.name }}</h1>
-    
-    <p>{{ problem.statement }}</p>
+    <p>{{ problem.statement|linebreaks }}</p>
     
     <h2> Input Section </h2>
-    <p>{{ problem.input_section }}</p>
+    <p>{{ problem.input_section|linebreaks }}</p>
 
     <h2> Output Section </h2>
-    <p>{{ problem.output_section }}</p>
+    <p>{{ problem.output_section|linebreaks }}</p>
     
     <h2>Sample Test Cases:</h2>
     <ol>
         {% for testcase in samples %}
             <li>
-                <div>{{ testcase.data }}</div>
+                <div>{{ testcase.data|linebreaks }}</div>
             </li>
         {% endfor %}
     </ol>

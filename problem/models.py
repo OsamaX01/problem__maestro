@@ -22,3 +22,13 @@ class TestCase(models.Model):
 
     def __str__(self):
         return f"{self.problem.name} Test case {self.number}"
+    
+    def save(self, *args, **kwargs):
+        if not self.number:
+            # Get the maximum number of test cases for this problem
+            max_number = TestCase.objects.filter(problem=self.problem).aggregate(models.Max('number'))['number__max']
+            if max_number is not None:
+                self.number = max_number + 1
+            else:
+                self.number = 1
+        super().save(*args, **kwargs)
