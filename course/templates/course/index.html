@@ -1,18 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Course </title>
-    </head>
-    <body>
-        <h1> 
-            {{ course.name }}
-        </h1>
-        {% for problem in course.problems.all %}
-            <li>
-                <a href="{% url 'problem:index' problem.id %}"> {{ problem.name }} </a>        
-            </li>
-        {% empty %}
-            <li> No problems added Yet! </li>
-        {% endfor %}
-    </body>
+<head>
+    <title>Course</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ course.name }}</h1>
+
+    {% for problem in course.problems.all %}
+        <li>
+            <a href="{% url 'problem:index' problem.id %}">{{ problem.name }}</a>
+        </li>
+    {% empty %}
+        <li>No problems added yet!</li>
+    {% endfor %}
+
+    <br>
+
+    {% if request.user.role == 'instructor' %}
+        <button id="showUnusedProblems">Add Problem</button>
+    {% endif %}
+
+    {% if request.user.role == 'instructor' %}
+        <button id="showUsedProblems">Remove Problem</button>
+    {% endif %}
+
+    <div id="unusedProblemList" class="hidden">
+        <form action="{% url 'course:add_problem_to_course' course.id %}" method="post">
+            {% csrf_token %}
+            <select name="problem_id">
+                {% for problem in unused_problems %}
+                    <option value="{{problem.id}}"> {{problem.name}} </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="usedProblemList" class="hidden">
+        <form action="{% url 'course:remove_problem_to_course' course.id %}" method="post">
+            {% csrf_token %}
+            <select name="problem_id">
+                {% for problem in course.problems.all %}
+                    <option value="{{problem.id}}"> {{problem.name}} </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('showUnusedProblems').addEventListener('click', function() {
+            document.getElementById('unusedProblemList').classList.remove('hidden');
+        });
+
+        document.getElementById('showUsedProblems').addEventListener('click', function() {
+            document.getElementById('usedProblemList').classList.remove('hidden');
+        });
+    </script>
+</body>
 </html>
