@@ -11,6 +11,8 @@
             <li>
                 <a href="{% url 'problem:index' problem.id %}"> {{ problem.name }} </a>        
             </li>
+        {% empty %}
+            <li> No problems added Yet! </li>
         {% endfor %}
     </body>
 </html>
