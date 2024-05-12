@@ -12,5 +12,10 @@
             {% endif %}   
         {% endfor %}
     </ul>
+
+
+    {% if request.user.role == 'instructor' %}
+        <h3> <a href="{% url 'problem:my_problems' %}"> My Problems </a> </h3>
+    {% endif %}
 {% endblock body %}
     
