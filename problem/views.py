@@ -41,7 +41,7 @@ def create_test_case(request, problem_id):
             test_case.save()
             
             if 'finish' in request.POST:
-                return redirect('dashboard:index')
+                return redirect('problem:my_problems')
             else:
                 return redirect('problem:create_test_case', problem_id=problem_id)
     else:
