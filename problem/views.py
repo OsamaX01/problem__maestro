@@ -52,6 +52,9 @@ def create_test_case(request, problem_id):
     })
 
 def my_problems(request):
+    if request.user.role == 'student':
+        return redirect('dashboard:index')
+
     problems = Problem.objects.filter(instructor = request.user.id)
     return render(request, 'problem/my_problems.html', {
         'problems': problems
