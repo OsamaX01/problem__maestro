@@ -1,114 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'dashboard/layout.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProbleMaestro</title>
+{% block styles %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    <link rel="stylesheet" href="{% static 'dashboard/user_dashboard.css' %}">
+{% endblock styles %}
+    
 
-        .navbar {
-            background-color: #343a40 !important;
-            color: #fff;
-        }
+{% block body %}
 
-        .navbar a {
-            color: #fff !important;
-        }
+{% include 'dashboard/my_navbar.html' %}
 
-        .content {
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            color: #343a40;
-        }
-
-        .footer {
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            width: 100%;
-        }
-
-        .footer p {
-            margin: 0;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <div class="col-6 col-lg-auto">
-                <a class="navbar-brand" href="#">ProbleMaestro</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    
-                    {% if request.user.role == 'instructor' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'course:create' %}">Create Course</a>
-                        </li>
-                    {% endif %}
-                    {% if request.user.role == 'instructor' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'problem:create' %}">Create Problem</a>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:profile' %}">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:logout' %}">Sign out</a>
-                    </li>
-                </ul>
-            </div>
+<div class="content">
+    <h3 style="font-weight: bold;">My Courses</h3>
+    {% for course in courses %}
+    <a href="{% url 'course:index' course.id %}">
+        <div class="card">
+            <h2>{{ course.name }}</h2>
         </div>
-    </nav>
-
+    </a>
+    {% empty %}
     <div class="content">
-        <h3 style="font-weight: bold;">My Courses</h3>
-        {% for course in courses %}
-        <a href="{% url 'course:index' course.id %}">
-            <div class="card">
-                <h2>{{ course.name }}</h2>
-            </div>
-        </a>
-        {% empty %}
-        <div class="content">
-            <h2>You are not enrolled in any courses yet</h2>
-        </div>
-        {% endfor %}
+        <h2>You are not enrolled in any courses yet</h2>
     </div>
+    {% endfor %}
+</div>
 
-    <footer class="footer">
-        <p>&copy; 2024 ProbleMaestro. All Rights Reserved.</p>
-    </footer>
-</html>
+<footer class="footer">
+    <p>&copy; 2024 ProbleMaestro. All Rights Reserved.</p>
+</footer>
+{% endblock body %}
