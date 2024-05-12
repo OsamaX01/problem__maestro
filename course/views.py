@@ -8,7 +8,7 @@ from problem.models import Problem
 # Create your views here.
 def index(request, course_id):
     course = Course.objects.get(pk = course_id)
-    unused_problems = Problem.objects.exclude(courses=course_id)
+    unused_problems = Problem.objects.exclude(courses=course_id).filter(instructor_id=request.user.id)
 
     return render(request, "course/index.html", {
         "course" : course, 
