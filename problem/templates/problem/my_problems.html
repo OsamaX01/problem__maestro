@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ request.user.name }}</title>
+</head>
+<body>
+    <h2> My problems: </h2>
+    {% for problem in problems %}
+    <ul>
+        <li>
+            <a href="{% url 'problem:index' problem.id %}"> {{problem.name}} </a>
+        </li>
+    </ul>
+    {% endfor %}  
+</body>
+</html>
