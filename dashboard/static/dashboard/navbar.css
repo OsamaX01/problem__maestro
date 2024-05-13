@@ -45,27 +45,3 @@ p {
     font-weight: bold;
     text-align: center;
 }
-
-.actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.actions a {
-    text-decoration: none;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 5px 0;
-    font-weight: bold;
-}
-
-.tap-box {
-    border: 2px solid #007bff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-left: 5px;
-}

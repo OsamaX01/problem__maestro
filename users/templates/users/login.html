@@ -1,6 +1,16 @@
 {% extends 'users/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+{% endblock styles %}
 
 {% block body %}
+
+{% include 'dashboard/guest_navbar.html' %}
+
+<div class="container">
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -8,12 +18,13 @@
             {% endfor %}
         </ul>
     {% endif %}
-    
-    <h1> Login </h1>
-    <form action = "{% url 'users:login' %}" method="POST">
+    <p style="text-align: center;">Please enter your credentials!</p>
+    <form action="{% url 'users:login' %}" method="POST" style="display: flex; flex-direction: column; align-items: center;">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" value = "login">  
+        <input type="text" name="username" placeholder="Username" style="margin-bottom: 10px;">
+        <input type="password" name="password" placeholder="Password" style="margin-bottom: 10px;">
+        <input type="submit" value="Login">
     </form> 
+</div>
+
 {% endblock body %}
