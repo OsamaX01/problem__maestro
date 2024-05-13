@@ -8,20 +8,6 @@ body {
     flex-direction: column;
 }
 
-.navbar {
-    background-color: #343a40 !important;
-    color: #fff;
-}
-
-.navbar a {
-    color: #fff !important;
-}
-
-.content {
-    padding: 20px;
-    flex-grow: 1;
-}
-
 .card {
     background-color: #fff;
     border-radius: 10px;
