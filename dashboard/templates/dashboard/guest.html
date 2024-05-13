@@ -1,30 +1,49 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Guest</title>    
-    </head>
+{% extends 'dashboard/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/guests.css' %}">
+{% endblock styles %} 
+
+{% block body %}
     <body>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="col-6 col-lg-auto">
+                    <a class="navbar-brand" href="#">ProbleMaestro</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="main-content">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <h1>Welcome to our website!</h1>
+            <h1>
+                In a world full of problem solvers, be a Problem 
+                <span style="color: #343a40;">Maestro!</span>
+            </h1>
 
-        {% if not user.is_authenticated %}
-        <a href = "{% url 'users:register' %}" > Register </a>
-        {% endif %}
-        
-        <!-- Display login button if user is not logged in -->
-        {% if not user.is_authenticated %}
-        <a href = "{% url 'users:login' %}"> Login </a>
-        {% endif %}
-
-        {% if user.is_authenticated %}
-        <a href = "{% url 'users:logout' %}"> Logout </a>
-        {% endif %}
+            <h2>
+                We help students develop their programming skills.
+                <br>
+                We help instructors provide the optimal learning experience.
+            </h2>
+        </div>
     </body>
-</html>
+{% endblock body %}
