@@ -11,8 +11,6 @@
 {% block body %}
 
 {% include 'dashboard/guest_navbar.html' %}
-
-        <h2>User Registration</h2>
         <form action="{% url 'users:register' %}" method="POST">
             {% csrf_token %}
 
