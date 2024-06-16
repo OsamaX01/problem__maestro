@@ -1,35 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Course</title>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
-<body>
+{% extends 'course/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'course/course.css' %}">
+{% endblock styles %}
+    
+
+{% block body %}
+
+{% include 'dashboard/my_navbar.html' %}
+
+<div class="content">
     <h1>{{ course.name }}</h1>
 
     {% for problem in course.problems.all %}
-        <li>
-            <a href="{% url 'problem:index' problem.id %}">{{ problem.name }}</a>
-        </li>
+        <div class="card">
+            <h2><a href="{% url 'problem:index' problem.id %}">{{ problem.name }}</a></h2>
+        </div>
     {% empty %}
-        <li>No problems added yet!</li>
+        <div class="card">
+            <h2>No problems added yet!</h2>
+        </div>
     {% endfor %}
-
-    <br>
 
     {% if request.user.role == 'instructor' %}
         <button id="showUnusedProblems">Add Problem</button>
-    {% endif %}
-
-    {% if request.user.role == 'instructor' %}
         <button id="showUsedProblems">Remove Problem</button>
     {% endif %}
 
-    <div id="unusedProblemList" class="hidden">
+    <div id="unusedProblemList" class="hidden card">
         <form action="{% url 'course:add_problem_to_course' course.id %}" method="post">
             {% csrf_token %}
             <select name="problem_id">
@@ -41,7 +42,7 @@
         </form>
     </div>
 
-    <div id="usedProblemList" class="hidden">
+    <div id="usedProblemList" class="hidden card">
         <form action="{% url 'course:remove_problem_to_course' course.id %}" method="post">
             {% csrf_token %}
             <select name="problem_id">
@@ -52,15 +53,20 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+</div>
 
-    <script>
-        document.getElementById('showUnusedProblems').addEventListener('click', function() {
-            document.getElementById('unusedProblemList').classList.remove('hidden');
-        });
+<script>
+    document.getElementById('showUnusedProblems').addEventListener('click', function() {
+        var unusedProblemList = document.getElementById('unusedProblemList');
+        unusedProblemList.classList.remove('hidden');
+        unusedProblemList.scrollIntoView({ behavior: 'smooth' });
+    });
 
-        document.getElementById('showUsedProblems').addEventListener('click', function() {
-            document.getElementById('usedProblemList').classList.remove('hidden');
-        });
-    </script>
-</body>
-</html>
+    document.getElementById('showUsedProblems').addEventListener('click', function() {
+        var usedProblemList = document.getElementById('usedProblemList');
+        usedProblemList.classList.remove('hidden');
+        usedProblemList.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+{% endblock body %}
