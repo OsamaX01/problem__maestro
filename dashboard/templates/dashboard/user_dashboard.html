@@ -13,7 +13,8 @@
 {% include 'dashboard/my_navbar.html' %}
 
 <div class="content">
-    <h3 style="font-weight: bold;">My Courses</h3>
+    <h3 id ="my-courses-title"> My Courses </h3>
+    
     {% for course in courses %}
     <a href="{% url 'course:index' course.id %}">
         <div class="card">

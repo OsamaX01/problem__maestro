@@ -1,12 +1,17 @@
-{% extends 'users/layout.html' %}
+{% extends 'course/layout.html' %}
 {% load static %}
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-{% endblock style %}
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'users/register.css' %}">
+{% endblock styles %}
+    
 
 {% block body %}
-    <div class="container">
+
+{% include 'dashboard/guest_navbar.html' %}
+
         <h2>User Registration</h2>
         <form action="{% url 'users:register' %}" method="POST">
             {% csrf_token %}
@@ -20,5 +25,4 @@
 
             <button type="submit">Register</button>
         </form>
-    </div>
 {% endblock body %}
