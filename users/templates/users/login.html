@@ -20,8 +20,6 @@
         </ul>
         {% endif %}
 
-        <p>Please enter your credentials!</p>
-
         <form class='form' action="{% url 'users:login' %}" method="POST">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Username">

@@ -1,15 +1,30 @@
 {% extends 'users/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'users/profile.css' %}">
+{% endblock styles %}
+  
 
 {% block body %}
-  <h2>Edit Profile</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="fieldWrapper">
+
+{% include 'dashboard/my_navbar.html' %}
+
+<div class="container mt-5">
+    <div class="card p-4">
+      <h2>Edit Profile</h2>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group">
             {{ field.errors }}
             {{ field.label_tag }} {{ field }}
-        </div>
-    {% endfor %}
-    <button type="submit">Save Changes</button>
-  </form>
-{% endblock %}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+      </form>
+    </div>
+</div>
+{% endblock body %}
