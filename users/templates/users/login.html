@@ -1,30 +1,31 @@
-{% extends 'users/layout.html' %}
+{% extends 'course/layout.html' %}
 {% load static %}
 
 {% block styles %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'users/login.css' %}">
 {% endblock styles %}
+    
 
 {% block body %}
 
 {% include 'dashboard/guest_navbar.html' %}
 
-<div class="container">
-    {% if messages %}
+        {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li>{{ message }}</li>
+            <li>{{ message }}</li>
             {% endfor %}
         </ul>
-    {% endif %}
-    <p style="text-align: center;">Please enter your credentials!</p>
-    <form action="{% url 'users:login' %}" method="POST" style="display: flex; flex-direction: column; align-items: center;">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" style="margin-bottom: 10px;">
-        <input type="password" name="password" placeholder="Password" style="margin-bottom: 10px;">
-        <input type="submit" value="Login">
-    </form> 
-</div>
+        {% endif %}
 
+        <p>Please enter your credentials!</p>
+
+        <form class='form' action="{% url 'users:login' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
 {% endblock body %}
