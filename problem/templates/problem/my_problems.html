@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ request.user.name }}</title>
-</head>
-<body>
-    <h2> My problems: </h2>
-    {% for problem in problems %}
-    <ul>
-        <li>
-            <a href="{% url 'problem:index' problem.id %}"> {{problem.name}} </a>
-        </li>
-    </ul>
-    {% endfor %}  
-</body>
-</html>
+{% extends 'course/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'problem/my_problems.css' %}"> 
+{% endblock styles %}
+    
+
+{% block body %}
+
+{% include 'dashboard/my_navbar.html' %}
+    <div class="content">
+        <h2> My Problems </h2>
+        <ul>
+            {% for problem in problems %}
+            <li>
+                <div class="card">
+                    <h2>
+                        <a href="{% url 'problem:index' problem.id %}">{{ problem.name }}</a>
+                    </h2>
+                </div>  
+            </li>
+                {% endfor %}
+            </ul>
+    </div>
+{% endblock body %}

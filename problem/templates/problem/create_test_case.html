@@ -1,17 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Test Case</title>
-</head>
-<body>
-    <h1>Create New Test Case</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ test_case_form.as_p }}
-        <button type="submit">Add Another Test Case</button>
-        <button type="submit" name="finish">Finish</button>
-    </form>
-</body>
-</html>
+{% extends 'course/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'problem/create_problem.css' %}"> 
+{% endblock styles %}
+    
+
+{% block body %}
+
+{% include 'dashboard/my_navbar.html' %}
+
+<h3> Create New Test Case </h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{ test_case_form.as_p }}
+    <button type="submit">Add Another Test Case</button>
+    <button type="submit" name="finish">Finish</button>
+</form>
+
+{% endblock body %}
