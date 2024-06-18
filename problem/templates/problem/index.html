@@ -1,25 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ problem.name }}</title>
-</head>
-<body>
-    <h1>{{ problem.name }}</h1>
-    <p>{{ problem.statement|linebreaks }}</p>
-    
-    <h2> Input Section </h2>
-    <p>{{ problem.input_section|linebreaks }}</p>
+{% extends 'course/layout.html' %}
+{% load static %}
 
-    <h2> Output Section </h2>
-    <p>{{ problem.output_section|linebreaks }}</p>
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'problem/index.css' %}">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock styles %}
     
-    <h2>Sample Test Cases:</h2>
-    <ol>
-        {% for testcase in samples %}
-            <li>
-                <div>{{ testcase.data|linebreaks }}</div>
-            </li>
-        {% endfor %}
-    </ol>
-</body>
-</html>
+
+{% block body %}
+
+{% include 'dashboard/my_navbar.html' %}
+
+    <div class="my_container">
+        <h1>{{ problem.name }}</h1>
+        <p>{{ problem.statement|linebreaks }}</p>
+
+        <h2>Input Section</h2>
+        <p>{{ problem.input_section|linebreaks }}</p>
+
+        <h2>Output Section</h2>
+        <p>{{ problem.output_section|linebreaks }}</p>
+
+        <h2>Sample Test Cases</h2>
+        <ol class="sample-test-cases">
+            {% for testcase in samples %}
+                <li>
+                    <div class="card">
+                        {{ testcase.data|linebreaks }}
+                        Output:
+                        <!-- TODO: Add correct output -->
+                        {{ testcase.data|linebreaks }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+
+{% endblock body %}

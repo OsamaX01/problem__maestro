@@ -1,0 +1,103 @@
+body, h1, h2, p, ol, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    align-items: flex-start;
+}
+
+.my_container {
+    max-width: 1400px; 
+    margin: 30px;
+    align-items: flex-start;
+}
+
+
+h1, h2 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+
+p {
+    margin-bottom: 15px;
+}
+
+
+ol {
+    list-style: decimal;
+    margin-left: 20px;
+}
+
+ol li {
+    
+    margin-bottom: 10px;
+}
+
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    padding: 15px;
+    width: 40%;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+a {
+    color: #343a40;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #007bff; 
+}
+
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; 
+}
+
+.sample-test-cases {
+    counter-reset: list-counter;
+}
+
+.sample-test-cases li {
+    list-style: none;
+    counter-increment: list-counter;
+}
+
+.sample-test-cases li::before {
+    content: "Sample " counter(list-counter) ": ";
+    font-weight: bold;
+    margin-right: 0.5em;
+}
+
