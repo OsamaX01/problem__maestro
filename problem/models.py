@@ -9,7 +9,7 @@ class Problem(models.Model):
     statement = models.TextField()
     input_section = models.TextField()
     output_section = models.TextField()
-    correct_answer = models.TextField()
+    correct_answer = models.TextField(default=None)
 
     def __str__(self):
         return f"{self.name} problem"
@@ -19,6 +19,7 @@ class TestCase(models.Model):
     number = models.IntegerField()
     data = models.TextField()
     is_visable = models.BooleanField()
+    answer = models.TextField(default='default answer')
 
     def __str__(self):
         return f"{self.problem.name} Test case {self.number}"
