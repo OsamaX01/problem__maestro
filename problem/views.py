@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Problem
 from .forms import ProblemForm, TestCaseForm
+from editor.forms import CodeSnippetForm
 
 # Create your views here.
 def index(request, problem_id):
@@ -25,9 +26,11 @@ def create_problem(request):
             return redirect('problem:create_test_case', problem_id=problem.id)
     else:
         problem_form = ProblemForm()
+        editor_from = CodeSnippetForm()
 
     return render(request, 'problem/create_problem.html', {
         'problem_form': problem_form,
+        'editor_form': editor_from,
     })
 
 @login_required
