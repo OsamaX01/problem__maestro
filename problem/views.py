@@ -6,8 +6,8 @@ from .models import Problem
 from .forms import ProblemForm, TestCaseForm
 
 from editor.forms import CodeSnippetForm
-from code_execution.functions import validate_solution
-from code_execution.api import execute_code_api 
+from editor.functions import validate_solution
+from editor.api import execute_code_api 
 
 def compute_test_answer(test_case):
     result = execute_code_api(test_case.problem.correct_answer, 'cpp', test_case.data)
