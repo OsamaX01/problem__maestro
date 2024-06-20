@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, 0.4);
     overflow: auto;
     padding-top: 60px;
-    align-items: flex-start; /* Added */
+    align-items: flex-start;
 }
 
 .modal-content {
@@ -23,7 +23,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: box-shadow 0.3s ease;
-    align-items: flex-start; /* Added */
+    align-items: flex-start;
 }
 
 .close {
@@ -41,4 +41,22 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.accepted {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(22, 135, 22);
+}
+
+.wrong-answer {
+    font-size: 16px;
+    font-weight: bold;
+    color: #023266;
+}
+
+.description {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
 }

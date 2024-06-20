@@ -18,12 +18,12 @@ def index(request, problem_id):
             code = form.cleaned_data['code']
             problem_id = form.cleaned_data['problem_id']
             problem = Problem.objects.get(id = problem_id)
-            result = validate_solution(problem, code)  
-            print(result)
+            validation = validate_solution(problem, code)  
             return  render(request, "problem/index.html", {
                 "problem" : problem,
                 "samples" : samples,
-                "result" : result,
+                "result" : validation[0],
+                "description" : validation[1]
             })
         else:
             print(form.errors)

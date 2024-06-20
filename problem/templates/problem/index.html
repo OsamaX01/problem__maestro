@@ -59,13 +59,19 @@
     </div>
 
     {% if result %}
-    <div id="resultModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>{{ result }}</p>
+        <div id="resultModal" class="modal">        
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                {% if result == 'Accepted' %}
+                <p class="accepted">{{ result }}</p>
+                {% elif result == 'Wrong Answer' %}
+                <p class="wrong-answer">{{ result }}</p>
+                {% else %}
+                <p>{{ result }}</p>
+                {% endif %}
+                <p class="description"> {{ description }} </p>
+            </div>
         </div>
-    </div>
-
-{% endif %}
+    {% endif %}
 
 {% endblock body %}
