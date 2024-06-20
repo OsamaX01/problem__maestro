@@ -1,21 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
 
 from .models import Problem
 from .forms import ProblemForm, TestCaseForm
+from .functions import compute_test_answer
 
 from editor.forms import CodeSnippetForm
 from editor.functions import validate_solution
-from editor.api import execute_code_api 
-
-def compute_test_answer(test_case):
-    result = execute_code_api(test_case.problem.correct_answer, 'cpp', test_case.data)
-    print(result)
-    if result['error']:
-        raise ValidationError(f"problem correct code answer has error running the following test {test_case.data} The error {result['error']}")
-    else:
-        return result['output']
 
 # Create your views here.
 def index(request, problem_id):
