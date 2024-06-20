@@ -6,6 +6,7 @@ from .models import Problem
 from .forms import ProblemForm, TestCaseForm
 
 from editor.forms import CodeSnippetForm
+from code_execution.functions import validate_solution
 from code_execution.api import execute_code_api 
 
 def compute_test_answer(test_case):
@@ -20,10 +21,26 @@ def compute_test_answer(test_case):
 def index(request, problem_id):
     problem = Problem.objects.get(pk = problem_id)
     samples = problem.testcases.filter(is_visable=True)
+    if request.method == 'POST':
+        form = CodeSnippetForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            problem_id = form.cleaned_data['problem_id']
+            problem = Problem.objects.get(id = problem_id)
+            result = validate_solution(problem, code)  
+            print(result)
+            return  render(request, "problem/index.html", {
+                "problem" : problem,
+                "samples" : samples,
+                "result" : result,
+            })
+        else:
+            print(form.errors)
+        
 
     return render(request, "problem/index.html", {
         "problem" : problem,
-        "samples" : samples, 
+        "samples" : samples,
     })
 
 @login_required
