@@ -104,14 +104,19 @@ def approve_ai_testcases(request, problem_id):
         for i in range(len(testcases)):
             input_data = request.POST.get(f'input_{i}')
             is_visible = request.POST.get(f'is_visible_{i}') == 'on'
-            test_case = TestCase()
-            test_case.data = input_data
-            test_case.problem = problem
-            test_case.is_visable = is_visible
-            test_case.answer = compute_test_answer(test_case)
-            test_case.save()
+            if input_data != None: 
+                test_case = TestCase()
+                print(input_data)
+                test_case.data = input_data
+                test_case.problem = problem
+                test_case.is_visable = is_visible
+                test_case.answer = compute_test_answer(test_case)
+                test_case.save()
 
-        return redirect('problem:my_problems')
+        if 'finish' in request.POST:
+            return redirect('problem:my_problems')
+        else:
+            return redirect('problem:create_test_case', problem_id=problem_id)
 
     return render(request, 'problem/approve_ai_testcases.html', {
         'problem': problem,

@@ -23,6 +23,12 @@ h5 {
     margin: 20px 0;
 }
 
+.top-right-button {
+    position: absolute;
+    margin-top: 130px;
+    top: 20px;
+    right: 40px;
+}
 
 form {
     background-color: #fff;

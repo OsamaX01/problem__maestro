@@ -3,30 +3,48 @@
 
 {% block styles %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'problem/create_problem.css' %}">
 {% endblock styles %}
 
 {% block body %}
 
+{% include 'dashboard/my_navbar.html' %}
+
 <h3>Approve AI-Generated Test Cases for {{ problem.name }}</h3>
 
-<form method="post">
+<form method="post" id="testcase-form">
     {% csrf_token %}
-    {% for testcase in testcases %}
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="input_{{ forloop.counter0 }}">Input</label>
-                    <textarea class="form-control" id="input_{{ forloop.counter0 }}" name="input_{{ forloop.counter0 }}">{{ testcase }}</textarea>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="is_visible_{{ forloop.counter0 }}" name="is_visible_{{ forloop.counter0 }}"
-                           {% if testcase.is_visable %}checked{% endif %}>
-                    <label class="form-check-label" for="is_visible_{{ forloop.counter0 }}">Visible</label>
+    <div id="testcases-container">
+        {% for testcase in testcases %}
+            <div class="card mt-3 testcase-card" id="testcase_{{ forloop.counter0 }}">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="input_{{ forloop.counter0 }}">Input</label>
+                        <textarea class="form-control" id="input_{{ forloop.counter0 }}" name="input_{{ forloop.counter0 }}">{{ testcase }}</textarea>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="is_visible_{{ forloop.counter0 }}" name="is_visible_{{ forloop.counter0 }}"
+                               {% if testcase.is_visable %}checked{% endif %}>
+                        <label class="form-check-label" for="is_visible_{{ forloop.counter0 }}">Visible</label>
+                    </div>
+                    <button type="button" class="btn btn-danger mt-3" onclick="deleteTestCase({{ forloop.counter0 }})">Delete</button>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-primary mt-3">Approve</button>
+        {% endfor %}
+    </div>
+
+    <button class="btn btn-primary mt-3" type="submit">Approve and add more</button>
+    <button class="btn btn-primary mt-3" type="submit" name="finish">Approve and finish</button>
 </form>
+
+<script>
+    function deleteTestCase(index) {
+        var testcaseCard = document.getElementById('testcase_' + index);
+        if (testcaseCard) {
+            testcaseCard.remove();
+        }
+    }
+</script>
 
 {% endblock body %}
