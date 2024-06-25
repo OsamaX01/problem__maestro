@@ -28,7 +28,7 @@
                                {% if testcase.is_visable %}checked{% endif %}>
                         <label class="form-check-label" for="is_visible_{{ forloop.counter0 }}">Visible</label>
                     </div>
-                    <button type="button" class="btn btn-danger mt-3" onclick="deleteTestCase({{ forloop.counter0 }})">Delete</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="deleteTestCase(`{{ forloop.counter0 }}`)">Delete</button>
                 </div>
             </div>
         {% endfor %}
@@ -36,6 +36,7 @@
 
     <button class="btn btn-primary mt-3" type="submit">Approve and add more</button>
     <button class="btn btn-primary mt-3" type="submit" name="finish">Approve and finish</button>
+
 </form>
 
 <script>
