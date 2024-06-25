@@ -1,12 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Problem
+import json
+
+from urllib.parse import urlencode
+
+from .models import Problem, TestCase
 from .forms import ProblemForm, TestCaseForm
 from .functions import compute_test_answer
 
 from editor.forms import CodeSnippetForm
 from editor.functions import validate_solution
+
+from openai_api.forms import PromptForm
+from openai_api.api import request_problem
 
 # Create your views here.
 def index(request, problem_id):
@@ -35,21 +42,80 @@ def index(request, problem_id):
     })
 
 @login_required
+def create_problem_using_ai(request):
+    if request.method == 'POST':
+        problem_prompt_form = PromptForm(request.POST)
+        if problem_prompt_form.is_valid():
+            problem_prompt = problem_prompt_form.cleaned_data['prompt']
+            problem = request_problem(problem_prompt)
+            if problem['success'] == True:
+                query_string = urlencode(problem)
+                return redirect(f'/problem/create?{query_string}')
+            else:
+                return render(request, 'problem/create_problem_using_ai.html', {
+                    'prompt_form': problem_prompt_form,
+                    'message' : 'Please try again with a better prompt and make sure it is related to problem writing',
+                })
+    else:
+        problem_prompt_form = PromptForm()
+
+    return render(request, 'problem/create_problem_using_ai.html', {
+        'prompt_form': problem_prompt_form,
+    })
+
+@login_required
 def create_problem(request):
+    initial_data = {
+        'name': request.GET.get('title', ''),
+        'statement': request.GET.get('statement', ''),
+        'input_section': request.GET.get('input', ''),
+        'output_section': request.GET.get('output', ''),
+    }
+
+    testcases = request.GET.getlist('testcases', [])
+    
     if request.method == 'POST':
         problem_form = ProblemForm(request.POST)
         if problem_form.is_valid():
             problem = problem_form.save(commit=False)
             problem.instructor = request.user
             problem.save()
-            return redirect('problem:create_test_case', problem_id=problem.id)
+            if testcases == []:
+                return redirect('problem:create_test_case', problem_id=problem.id)
+            else:
+                request.session['testcases'] = testcases
+                return redirect('problem:approve_ai_testcases', problem_id=problem.id)
     else:
-        problem_form = ProblemForm()
+        problem_form = ProblemForm(initial=initial_data)
         editor_from = CodeSnippetForm()
 
     return render(request, 'problem/create_problem.html', {
         'problem_form': problem_form,
         'editor_form': editor_from,
+    })
+
+@login_required
+def approve_ai_testcases(request, problem_id):
+    problem = Problem.objects.get(pk=problem_id)
+    testcases = request.session.get('testcases', [])
+    testcases = eval(testcases[0])
+
+    if request.method == 'POST':
+        for i in range(len(testcases)):
+            input_data = request.POST.get(f'input_{i}')
+            is_visible = request.POST.get(f'is_visible_{i}') == 'on'
+            test_case = TestCase()
+            test_case.data = input_data
+            test_case.problem = problem
+            test_case.is_visable = is_visible
+            test_case.answer = compute_test_answer(test_case)
+            test_case.save()
+
+        return redirect('problem:my_problems')
+
+    return render(request, 'problem/approve_ai_testcases.html', {
+        'problem': problem,
+        'testcases': testcases
     })
 
 @login_required

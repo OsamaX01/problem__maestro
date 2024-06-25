@@ -1,0 +1,28 @@
+{% extends 'problem/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'problem/create_problem.css' %}"> 
+{% endblock styles %}
+    
+
+{% block body %}
+
+{% include 'dashboard/my_navbar.html' %}
+
+<h5> Write a small descpription of the problem topic and its specifications </h5>
+
+{% if message %}
+    <h5> {{message}} </h5>
+{% endif %}
+    
+
+<form method="post">
+    {% csrf_token %}
+    {{ prompt_form.as_p }}
+    <button type="submit"> Create Problem Using Ai </button>
+</form>
+
+{% endblock body %}

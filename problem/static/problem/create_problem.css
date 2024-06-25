@@ -17,6 +17,13 @@ h3 {
 }
 
 
+h5 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+
 form {
     background-color: #fff;
     border-radius: 10px;

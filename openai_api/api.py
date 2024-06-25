@@ -25,5 +25,9 @@ def request_problem(user_message):
     try:
         data_dict = json.loads(response)
         return data_dict
-    except:
-        return None #TODO
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+        return {"error": "There was an issue processing the response. Please try again."}
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return {"error": "An unexpected error occurred. Please try again later."}
